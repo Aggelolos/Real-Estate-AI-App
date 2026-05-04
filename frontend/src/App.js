@@ -17,7 +17,7 @@ function App() {
 
   useEffect(() => {
     if (token) {
-      axios.get('[http://167.172.188.187:8000/api/properties/](http://167.172.188.187:8000/api/properties/)', {
+      axios.get('http://167.172.188.187:8000/api/properties/', {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(response => setProperties(response.data))
