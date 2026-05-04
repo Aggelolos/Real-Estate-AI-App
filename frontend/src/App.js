@@ -17,7 +17,7 @@ function App() {
 
   useEffect(() => {
     if (token) {
-      axios.get('http://127.0.0.1:8000/api/properties/', {
+      axios.get('[http://167.172.188.187:8000/api/properties/](http://167.172.188.187:8000/api/properties/)', {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(response => setProperties(response.data))
@@ -31,7 +31,7 @@ function App() {
   const handleAuthSubmit = (e) => {
     e.preventDefault();
     const endpoint = isLoginMode ? 'api/login/' : 'api/register/';
-    axios.post(`http://127.0.0.1:8000/${endpoint}`, authData)
+    axios.post(`http://167.172.188.187:8000/${endpoint}`, authData)
       .then(response => {
         if (isLoginMode) {
           localStorage.setItem('token', response.data.access);
@@ -47,7 +47,7 @@ function App() {
 
   const handlePropertySubmit = (e) => {
     e.preventDefault();
-    axios.post('http://127.0.0.1:8000/api/properties/', newProperty, {
+    axios.post('http://167.172.188.187:8000/api/properties/', newProperty, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
@@ -59,7 +59,7 @@ function App() {
   // NEW: Delete Function
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this listing?")) {
-      axios.delete(`http://127.0.0.1:8000/api/properties/${id}/`, {
+      axios.delete(`http://167.172.188.187:8000/api/properties/${id}/`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(() => {
@@ -77,7 +77,7 @@ function App() {
 
   // NEW: Save Updated Property
   const handleUpdate = (id) => {
-    axios.patch(`http://127.0.0.1:8000/api/properties/${id}/`, editFormData, {
+    axios.patch(`http://167.172.188.187:8000/api/properties/${id}/`, editFormData, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {

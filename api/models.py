@@ -1,23 +1,25 @@
-from .ai import predict_price
 from django.db import models
+from django.contrib.auth.models import User
+from .ai import predict_price 
 
-# Create your models here.
-class Agent(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-    
 class Property(models.Model):
-    agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
     rooms = models.IntegerField()
     house_age = models.IntegerField()
     price = models.FloatField(null=True, blank=True)
+    agent = models.ForeignKey(User, on_delete=models.CASCADE)
 
-
-# This intercepts the saving process to inject the AI prediction
     def save(self, *args, **kwargs):
-        if not self.price:  # Only run AI if the price is left blank
-            self.price = predict_price(self.house_age, self.rooms)
+        # Only run the AI if a price hasn't been calculated yet
+        if not self.price:
+            try:
+                # Call the function from your ai.py file
+                
+                self.price = predict_price(self.house_age, self.rooms)
+            except Exception as e:
+                print(f"AI Model failed to calculate: {e}")
+        
+        # Proceed with the normal database save
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.rooms}-room house (Agent: {self.agent.name})"
+        return f"{self.rooms}-room house (Agent: {self.agent.username})"
