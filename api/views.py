@@ -10,6 +10,11 @@ class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
 
+def perform_create(self, serializer):
+        # Automatically attach the logged-in user as the agent
+        serializer.save(agent=self.request.user)
+        
+        
 # 2. Main Dashboard Door (List & Create)
 class PropertyList(generics.ListCreateAPIView):
     queryset = Property.objects.all()

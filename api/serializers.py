@@ -24,3 +24,4 @@ class PropertySerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
         fields = ['id', 'rooms', 'house_age', 'price', 'agent_name', 'agent']
+        read_only_fields = ['agent']
